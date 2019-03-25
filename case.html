@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VueTest</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body >
+<div id="tasks">
+    <input type="text" v-model="text"><button @click="add">add</button>
+    <h2>Incomplete Tasks</h2>
+    <ul v-if="incompleteTasks[0]">
+        <li v-for="task in incompleteTasks">
+            <label>
+                <input type="checkbox" v-model="task.isComplete"> {{task.description}}
+            </label>
+        </li>
+    </ul>
+    <h2>Completed Tasks</h2>
+    <ul v-if="completeTasks[0]">
+        <li v-for="task in completeTasks">
+            <label>
+                <input type="checkbox" v-model="task.isComplete"> {{task.description}}
+            </label>
+        </li>
+    </ul>
+</div>
+<script>
+    /* let app = new Vue({
+        el: '#root',
+        data: {
+           // text: '',
+            list: ['item1', 'item2', 'item3']
+        },
+        methods: {
+            add(){
+                this.list.push(this.text);
+                this.text = '';
+            }
+        },
+        computed:{
+            reverse(){
+                return this.text.split('').reverse().join('');
+            }
+        }
+    }); */
+
+    new Vue({
+    el: '#tasks',
+
+    data: {
+        text: '',
+        tasks: [{
+            description: 'task 1',
+            isComplete: false
+        }, {
+            description: 'task 2',
+            isComplete: false
+        }]
+    },
+    methods: {
+            add(){
+                this.tasks.push({description: this.text.value , completed: false});
+			    this.text.value = '';
+            }
+        },
+
+    computed: {
+        incompleteTasks() {
+                return this.tasks.filter(task => !task.isComplete)
+        },
+        completeTasks() {
+            return this.tasks.filter(task => task.isComplete)
+        }
+       
+    }
+})
+   
+   
+
+    
+</script>
+</body>
+</html>
